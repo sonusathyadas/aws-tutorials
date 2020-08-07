@@ -27,19 +27,19 @@ Elastic Beanstalk offers the features such as:
 2) Click on the `Create Application` button to start creating your first `Beanstalk` application on AWS.
 3) In the create application wizard, specify the name of the application as `sample-webapp` and choose the platform type as `.NET Core on Linux`. You can choose any other framework of your choice. For this demo we are selecting .NET Core. Select `Sample application` from the `Application code` section and click on `Create application` button.
 
-    ![ebs-create](images/ebs-create.png)
+    ![aeb-create](images/aeb-create.png)
 
 4) You application will be created in few seconds. It creates a new Beanstalk application and a default environment in the application. You can use this environment to deploy your application.Click on the application name from the list of applications.
 
-    ![ebs-list](images/ebs-list.png)
+    ![aeb-list](images/aeb-list.png)
 
 5)  You can optionally, create additional environments within the application. To launch the application click on the URL of the default environment created. 
 
-    ![ebs-list](images/ebs-env-list.png)
+    ![aeb-list](images/aeb-env-list.png)
 
 6) This will show the default page of the Elastic Beanstalk application.
 
-    ![ebs-app-page](images/ebs-app-page.png)
+    ![aeb-app-page](images/aeb-app-page.png)
 
 > [!NOTE]
 > Your Beanstalk application will be deployed in the default VPC of the selected region. When the deployment is completed it creates a *Security Group* for the created application instance
@@ -55,80 +55,80 @@ Elastic Beanstalk offers the features such as:
 4) Ensure the application is running successfully and then publish the application to a folder.
     > dotnet publish -o sampleweb-dist -c release
 5) Move to the `sampleweb-dist` folder  and compress the contents using any zip utility to generate `sampleweb-dist.zip` file.
-6) Open the dashboard of EBS and navigate to the default environment configuration of the application. Click on the `Upload and deploy` button.
+6) Open the dashboard of Elastic Beanstalk and navigate to the default environment configuration of the application. Click on the `Upload and deploy` button.
     
-    ![ebs-deploy1](images/ebs-deploy1.png)
+    ![aeb-deploy1](images/aeb-deploy1.png)
 
 7) Click on the `Choose file` button and upload the zip file of your published application. A default version value will be displayed in the `Version Label` text box. You can update the version value if you wish. Click on the `Deploy` buttton to start deploying the application.
 
-    ![ebs-deploy2](images/ebs-deploy2.png)
+    ![aeb-deploy2](images/aeb-deploy2.png)
 
-8) Once the deployment is completed, navigate to the application URL and refresh the page. You will see the application running on your EBS environment.
+8) Once the deployment is completed, navigate to the application URL and refresh the page. You will see the application running on your Elastic Beanstalk environment.
 
-    ![ebs-deploy3](images/ebs-deploy3.png)
+    ![aeb-deploy3](images/aeb-deploy3.png)
 
-### Enable scaling for the EBS application
-By default, EBS assigns a `single t2.micro` instance type to the application. If you want, you can update the instance size of the application. To enable autoscaling based on a metric you need to convert the single instance application into a `Autoscaling group (Load balanced)`.
+### Enable scaling for the Elastic Beanstalk application
+By default, Beanstalk assigns a `single t2.micro` instance type to the application. If you want, you can update the instance size of the application. To enable autoscaling based on a metric you need to convert the single instance application into a `Autoscaling group (Load balanced)`.
 #### Scale up (Vertical Scaling)
-1) Open the EBS application dashboard, Click on the `configuration` menu. This will show a list of configurations for your application. To scale the application instance, click on the `Edit`  button for the `Capacity` configuration.
+1) Open the Elastic Beanstalk application dashboard, Click on the `configuration` menu. This will show a list of configurations for your application. To scale the application instance, click on the `Edit`  button for the `Capacity` configuration.
     
-    ![ebs-scaling1](images/ebs-scaling1.png)
+    ![aeb-scaling1](images/aeb-scaling1.png)
 
 2) In the `Capacity` configuration page, scroll down to `Instance Type` configuration value and change the type of the EC2 instance from `t2.micro` to some other instance type and click on `Apply` button.
 
-    ![ebs-scaling2](images/ebs-scaling2.png)
+    ![aeb-scaling2](images/aeb-scaling2.png)
 
 #### Scale out (Horizontal Scaling)
 
 1) To enable autoscaling for the application, you need to move the application into `Autoscaling group`. For that you can change the `Environment Type` value to `Load balanced` in the Capacity configuration page.
 
-    ![ebs-scaling3](images/ebs-scaling3.png)
+    ![aeb-scaling3](images/aeb-scaling3.png)
 
 2) Configure the minimum and maximum number of instances for your application. You can configure the numbers in the `Min` and `Max` textboxes below the `Environment Type`. 
 3) To configure a scaling condition, scroll down to the `Scaling Triggers` section and choose a metric type from the dropdown list. We can select `CPUUtilization` as the metric value for this demo. Set statistic value as `Average` and Unit as `Percent`. Specify the period and breach duration values as 5. Set upper threshold value for CPU utilization as `70%` and Lower threshold as `40%`. Also specify the scale up increment and scale down increment values as `1`. Click on `Apply` button to save the changes.
 
-    ![ebs-scaling4](images/ebs-scaling4.png)
+    ![aeb-scaling4](images/aeb-scaling4.png)
 
 4) A confirmation page will be displayed. While configuring autoscaling with Autoscaling group your current instances will be replaced. Click on the `Confirm` button to update.
 
-    ![ebs-scaling5](images/ebs-scaling5.png)
+    ![aeb-scaling5](images/aeb-scaling5.png)
 
 ### Clone the application environment
 1) Open the environment dashboard and click on the `Actions` button. Select `Clone environment` from the dropdown menu.
 
-    ![ebs-clone1](images/ebs-clone1.png)
+    ![aeb-clone1](images/aeb-clone1.png)
 
 2) Specify the name of the new environment. Also confirm the availability of the domain name. Click on `Clone` button to create a clone of the environment.
 
-    ![ebs-clone2](images/ebs-clone2.png)
+    ![aeb-clone2](images/aeb-clone2.png)
 
 3) It will take few minutes to clone the environment. Once completed you will be able to see the list of environments in the current application including the cloned one.
 
-    ![ebs-clone3](images/ebs-clone3.png)
+    ![aeb-clone3](images/aeb-clone3.png)
 
 4) You can navigate to the new application environment using the URL of the cloned environment.
 
 ### Swapping the environment URLs
 
-AWS Beanstalk provides an option to swap the environment URLs. This is a useful feature of EBS which allow you to publish an updated version of the application into the production environment withoout no downtime. You can publish the updated version into a *staging* environment and swap it with *production* environment.
+AWS Beanstalk provides an option to swap the environment URLs. This is a useful feature of Elastic Beanstalk which allow you to publish an updated version of the application into the production environment withoout no downtime. You can publish the updated version into a *staging* environment and swap it with *production* environment.
 
 1) To demonstrate this we can create a *staging* environment. For that, go to the `sample-webapp` application and click on the `Create a new environment` button.Create a `Web Server environment` and specify the name of the environment as `SampleWebapp-staging`. Also, provide a domain name as `sample-webapp-staging` and Platform type as `.NET Core on Linux`. Click `create new environment` button to create it.
 
-    ![ebs-swap1](images/ebs-swap1.png)
+    ![aeb-swap1](images/aeb-swap1.png)
 
 2) After creating the new environment, navigate to the environment dashboard and deploy a new version of the application into the staging environment.
 
-    ![ebs-swap2](images/ebs-swap2.png)
+    ![aeb-swap2](images/aeb-swap2.png)
 
 3) Once the deployment is completed, navigate to the new version of the application by clicking on the staging environment URL.
 
-    ![ebs-swap3](images/ebs-swap3.png)    
+    ![aeb-swap3](images/aeb-swap3.png)    
 
 4) Click on the `Actions` button in the staging environment dashboard and select `Swap environment URLs`. 
 5) In the swap environment configuration page, select the environment name from `Select an environment to swap` section to `sample-webapp-prod`.
     
-    ![ebs-swap4](images/ebs-swap4.png)
+    ![aeb-swap4](images/aeb-swap4.png)
 
 6) After the swap operation is completed, you can navigate to the production environment URL and refresh the page. It will show the updated version of the application.
 
-    ![ebs-swap5](images/ebs-swap5.png)
+    ![aeb-swap5](images/aeb-swap5.png)
