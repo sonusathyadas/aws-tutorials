@@ -60,3 +60,17 @@ This tutorial is a continuation of the [Creating and configuring VPC](aws-vpc.md
 13) You will be able to connect to the EC2 instance using the Administrator user and the decrypted password. 
     
     ![EC2 rdp4](images/RDP.png)
+
+## Enabling Termination protection for instance
+
+By default, you can terminate your instance using the Amazon EC2 console, command line interface, or API. To prevent your instance from being accidentally terminated using Amazon EC2, you can enable termination protection for the instance. The DisableApiTermination attribute controls whether the instance can be terminated using the console, CLI, or API. By default, termination protection is disabled for your instance. You can set the value of this attribute when you launch the instance, while the instance is running, or while the instance is stopped (for Amazon EBS-backed instances). You can't enable termination protection for Spot Instances.The DisableApiTermination attribute does not prevent Amazon EC2 Auto Scaling from terminating an instance. 
+
+1) Select the instance, and choose `Actions`, &gt; `Instance Settings` &gt; `Change Termination Protection`.
+    
+    ![EC2 protection](images/ec2-ter-protection.png)
+
+2) Choose `Yes, Enable`.
+
+    ![EC2 protection](images/ec2-ter-protection2.png)
+
+3) To disable the termination protection, Select the instance, and choose `Actions`, &gt; `Instance Settings` &gt; `Change Termination Protection`. Choose `Yes, Disable`.
