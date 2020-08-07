@@ -93,4 +93,42 @@ By default, EBS assigns a `single t2.micro` instance type to the application. If
 
     ![ebs-scaling5](images/ebs-scaling5.png)
 
+### Clone the application environment
+1) Open the environment dashboard and click on the `Actions` button. Select `Clone environment` from the dropdown menu.
 
+    ![ebs-clone1](images/ebs-clone1.png)
+
+2) Specify the name of the new environment. Also confirm the availability of the domain name. Click on `Clone` button to create a clone of the environment.
+
+    ![ebs-clone2](images/ebs-clone2.png)
+
+3) It will take few minutes to clone the environment. Once completed you will be able to see the list of environments in the current application including the cloned one.
+
+    ![ebs-clone3](images/ebs-clone3.png)
+
+4) You can navigate to the new application environment using the URL of the cloned environment.
+
+### Swapping the environment URLs
+
+AWS Beanstalk provides an option to swap the environment URLs. This is a useful feature of EBS which allow you to publish an updated version of the application into the production environment withoout no downtime. You can publish the updated version into a *staging* environment and swap it with *production* environment.
+
+1) To demonstrate this we can create a *staging* environment. For that, go to the `sample-webapp` application and click on the `Create a new environment` button.Create a `Web Server environment` and specify the name of the environment as `SampleWebapp-staging`. Also, provide a domain name as `sample-webapp-staging` and Platform type as `.NET Core on Linux`. Click `create new environment` button to create it.
+
+    ![ebs-swap1](images/ebs-swap1.png)
+
+2) After creating the new environment, navigate to the environment dashboard and deploy a new version of the application into the staging environment.
+
+    ![ebs-swap2](images/ebs-swap2.png)
+
+3) Once the deployment is completed, navigate to the new version of the application by clicking on the staging environment URL.
+
+    ![ebs-swap3](images/ebs-swap3.png)    
+
+4) Click on the `Actions` button in the staging environment dashboard and select `Swap environment URLs`. 
+5) In the swap environment configuration page, select the environment name from `Select an environment to swap` section to `sample-webapp-prod`.
+    
+    ![ebs-swap4](images/ebs-swap4.png)
+
+6) After the swap operation is completed, you can navigate to the production environment URL and refresh the page. It will show the updated version of the application.
+
+    ![ebs-swap5](images/ebs-swap5.png)
