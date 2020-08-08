@@ -10,3 +10,4 @@ In this tutorial series I am trying to cover some of the popular AWS services.
 3) [Deploying containers using ECS cluster with Fargate](aws-ecs-fargate.md)
 4) [Building Bots with Amazon Lex, .NET Core and Amazon Elastic Beanstalk](aws-lex.md)
 5) [Deploying web applications using Elastic Beanstalk](aws-beanstalk.md)
+6) [Storage service on AWS - Simple Storage Service (S3)](aws-s3.md)
