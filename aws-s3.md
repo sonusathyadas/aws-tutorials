@@ -243,6 +243,26 @@ You can replicate your entire bucket or selected objects to another S3 bucket in
     
     ![S3 Replication5](images/s3-repl5.png)
 
+6) Upload new files to the source bucket. It will be replicated to the target bucket immediately. 
+> [!NOTE]
+> When you enable replication for an existing bucket which has objects in it, it will not replicate those existing objects to the target bucket. Instead only the newly uploaded files will be replicated to the target bucket.
+
+### Replicating existing objects 
+To enable existing object replication for your account, you must contact AWS Support and create a technical support case (service: Amazon S3). This is required to ensure that replication is configured correctly. To prevent your request from being delayed, give your AWS Support case the subject “Replication for Existing Objects” and be sure to include the following information:
+* Source bucket
+* Destination bucket
+* Estimated storage volume to replicate (in terabytes)
+* Estimated storage object count to replicate
+
+Once the support ticket is created, AWS Support will work with the S3 team and whitelist your bucket for existing object replication. Also, remember to review the requirements before enabling replication. This includes ensuring that both the source and destination buckets have versioning enabled. Once your source bucket has been whitelisted, you can configure a replication rule as follows:
+1) Sign in to the *AWS Management Console* and open the *Amazon S3 console*.
+2) In the Bucket name list, choose the source bucket that has been whitelisted for existing object replication.
+3) Navigate to the Management tab of the bucket and choose Replication. This is where you create a replication rule to migrate the existing objects.
+4) Choose Add rule. Creating this rule also enables standard CRR or SRR on the bucket.
+5) In the Replication rule wizard, under Set source, choose Entire bucket to copy the all existing objects and new objects.
+6) To replicate existing objects, under Replication criteria, check the Replicate existing objects box, which enables S3 replication for existing objects. Note that if you do not see the Replicate existing objects box, your source bucket has not yet been whitelisted.
+    
+    ![S3 Replication6](images/s3-repl6.png)
 
 
 
