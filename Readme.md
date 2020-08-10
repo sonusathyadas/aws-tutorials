@@ -11,3 +11,4 @@ In this tutorial series I am trying to cover some of the popular AWS services.
 4) [Building Bots with Amazon Lex, .NET Core and Amazon Elastic Beanstalk](aws-lex.md)
 5) [Deploying web applications using Elastic Beanstalk](aws-beanstalk.md)
 6) [Storage service on AWS - Simple Storage Service (S3)](aws-s3.md)
+7) [Amazon AWS S3 Glacier](aws-s3-glacier.md)
