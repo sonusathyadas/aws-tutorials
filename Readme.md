@@ -13,3 +13,4 @@ In this tutorial series I am trying to cover some of the popular AWS services.
 6) [Storage service on AWS - Simple Storage Service (S3)](aws-s3.md)
 7) [Amazon AWS S3 Glacier](aws-s3-glacier.md)
 8) [Amazon AWS DynamoDB](aws-dynamodb.md)
+9) [Relational Database services using Amazon RDS](aws-rds.md)
