@@ -151,7 +151,7 @@ Using Amazon Virtual Private Cloud (VPC), you can isolate your DB Instances in y
 
     ![RDS-SQL-Create3](images/RDS-SQL-create3.png)
 
-6) In the `Settings` section, you can specify the database name, user name and password for the admin user.
+6) In the `Settings` section, you can specify the DB instance name, user name and password for the admin user.
 
     ![RDS-SQL-Create4](images/RDS-SQL-create4.png)
 
@@ -167,3 +167,31 @@ Using Amazon Virtual Private Cloud (VPC), you can isolate your DB Instances in y
 10) After the DB instance has been created, you can view the instance created  in the RDS console. If the database is in creation phase, you can see the notification on top. You can also view the credentials for connecting to DB instance by clicking the `View credential details` button.
 
     ![RDS-list](images/RDS-list.png)
+
+> [!IMPORTANT]
+> Make sure the Security group associated with the VPC configured for the RDS DB instance contains the Inbound security rules for allowing connections for SQL Server. Same is applicable for PostgreSQL, MySQL and Oracle database instances.
+## Connect using SQL Server Management Studio
+1) After the DB instance is successfully created, navigate to the database summary page by clicking on the database name. Under the `Connectivity and Security` section, you will be able to find the database connection endpoint. Copy the endpoint value.
+
+    ![RDS-connection1](images/RDS-connection1.png)
+
+2) Click on the `Configuration` tab to see the database storage and instance configurations. In the `Availability` section will will be able to find the `Master username` for the database instance.
+
+    ![RDS-connection2](images/RDS-connection2.png)
+
+3) Open the SQL Server Management Studio (SSMS) and provide the server name as the endpoint value you copied in step one, username as the master username and password as the master password you provided at the time of creating the database.
+
+    ![RDS-connection3](images/RDS-connection3.png)
+
+4) You will be able to see the databse in the `Database explorer` of SSMS.
+
+    ![RDS-connection4](images/RDS-connection4.png)
+
+## Take snapshot of RDS database
+1) You can take snapshot of the RDS db instance. For that select the DB instance from the list and in the DB summary page, click on the `Actions` button and select `Take snapshot`.
+
+    ![RDS-SQL-snapshot](images/RDS-snapshot1.png)
+
+2) In the snapshot configuration page, specify the name of the database snapshot and click `Take snapshot` button.
+
+    ![RDS-SQL-snapshot2](images/RDS-snapshot2.png)
