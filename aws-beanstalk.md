@@ -21,6 +21,60 @@ Elastic Beanstalk offers the features such as:
     
    ![aeb-architecture2](images/aeb-architecture2.png)
 
+## Deployment policies 
+AWS Elastic Beanstalk provides several  deployment policies (All at once, Rolling, Rolling with additional batch, Immutable, and Traffic splitting).. By default, your environment uses *all-at-once* deployments. If you created the environment with the EB CLI and it's an automatically scaling environment (you didn't specify the --single option), it uses *rolling* deployments. 
+### All At Once
+As the name suggests, when you deploy your application in All At Once mode in Elastic Beanstalk; it starts the deployment on all EC2 instances at the same time. It can be useful for fast deployments but if deployment process fails then all instances will fails and your load balancer will not be able to serve traffic because of downtime. In this case, you need to deploy the previous version from application versions and wait for them to complete.
+
+![All at once](images/eb-all-at-once.png)
+
+### Rolling deployments
+With *rolling deployments*, Elastic Beanstalk splits the environment's Amazon EC2 instances into batches and deploys the new version of the application to one batch at a time. It leaves the rest of the instances in the environment running the old version of the application. During a rolling deployment, some instances serve requests with the old version of the application, while instances in completed batches serve other requests with the new version. When you deploy in Rolling mode, you also define the number of instances to be grouped in a batch.
+
+![Rolling](images/eb-rolling-process.png)
+
+* If it failed in the first batch, the first instance will be down, both other instances will continue to serve the previous version.
+* If it failed in later batches, the failed instance will become unhealthy and there will be two versions served by your environment
+
+![Rolling](images/eb-rolling-failure.png)
+
+### Rolling deployment with an additional batch
+In this deployment, Elastic Beanstalk provisions a new batch of instances and starts by deploying the new version to them. Then, it will register the new instances to the load balancer and continues with the next batch of instances. After deployment is completed in all batches, it decreases the instances desired limit to the state where deployment started. In another words, it terminates the number of instances equal to the batch size it launched.
+
+![Rolling with batch](images/eb-rolling-with-batch-process.png)
+
+* If the deployment is failed in the first batch, it terminates the failed instances when you cancel the deployment and because deployment is done on additional batch, nothing will be effected. The number of instances will remain same.
+* if the deployment is failed after the first batch, again the failed batch will be terminated, but there will be two versions of your application served like in Rolling deployments without additional batch. You need to deploy the previous version again to rollback.
+
+![Rolling with batch failed](images/eb-rolling-with-batch-failure.png)
+
+### Immutable deployments
+*Immutable deployments* perform an immutable update to launch a full set of new instances running the new version of the application in a separate Auto Scaling group, alongside the instances running the old version. Immutable deployments can prevent issues caused by partially completed rolling deployments. If the new instances don't pass health checks, Elastic Beanstalk terminates them, leaving the original instances untouched.
+
+![Immutable](images/eb-immutable-start.png)
+![Immutable](images/eb-immutable-success.png)
+
+* In case of a deployment failure the new instances will be terminated without effecting your availability.
+
+![Immutable](images/eb-immutable-failure.png)
+
+### Traffic-splitting deployments
+*Traffic-splitting deployments* let you perform canary testing as part of your application deployment. In a traffic-splitting deployment, Elastic Beanstalk launches a full set of new instances just like during an immutable deployment. It then forwards a specified percentage of incoming client traffic to the new application version for a specified evaluation period. If the new instances stay healthy, Elastic Beanstalk forwards all traffic to them and terminates the old ones. If the new instances don't pass health checks, or if you choose to abort the deployment, Elastic Beanstalk moves traffic back to the old instances and terminates the new ones. There's never any service interruption.
+
+### Blue/Green deployments
+Blue/Green deployments are simply replicating your current environment (blue), deploying the new application to your new, cloned environment (green) and redirect the traffic to the new environment after deployment. If the deployment fails, you terminate the clone environment and nothing will be effected. If something goes bad after deployment, for example, your users experience a problem in the new version, you simply redirecting the traffic back to the old version. Hence, it would be wise to keep the old environment until you are sure that the deployment is successful and DNS propogation completed. Finally, you terminate the old environment and your cloned environment becomes your new blue one. 
+> [!NOTE]
+> Blue/Green does not exist as a deployment type on Elastic Beanstalk deployments. Because you need to duplicate the environment as a whole including Elastic Load Balancers.
+
+1) You clone the current environment using AWS Management Console or AWS CLI or EB CLI. It will create a replica of your environment along side with Elastic Load Balancers, Autoscaling Groups and other resources and deploy the current version on the instances.
+2) After your new environment is ready, you deploy the new version on this environment and verify that the deployment is successful by testing.
+    
+    ![eb-blue-green-start](images/eb-blue-green-start.png)
+
+3) Once you are sure that everything is fine, you swap the urls of the two environments using AWS Management Console or AWS CLI or EB CLI. Then the traffic will start to flow to your new environment as DNS propogation completes.
+
+    ![eb-blue-green-success](images/eb-blue-green-success.png)
+
 ## Deploying application to Elastic Beanstalk
 
 1) Open AWS console and click on Services menu and search for `Elastic Beanstalk`. From the search results choose `Elastic Beanstalk` and you will be navigated to the Beanstalk dashboard.

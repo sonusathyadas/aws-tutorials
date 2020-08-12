@@ -137,7 +137,7 @@ Using Amazon Virtual Private Cloud (VPC), you can isolate your DB Instances in y
 ![RDS-VPC](images/RDS-VPC-network.png)
 
 ## Create SQL Server database instance using AWS management console
-1) Open the AWS management console by navigating to [https://console.aws.amazon.com](https://console.aws.amazon.com)..Click on the `Services` menu and search for `RDS`. From the search result choose `RDS`.
+1) Open the AWS management console by navigating to [https://console.aws.amazon.com](https://console.aws.amazon.com).Click on the `Services` menu and search for `RDS`. From the search result choose `RDS`.
 2) In the RDS console, click on the `Create database` button to start creating a new database instance.
 3) In the create database wizard, choose `Standard create` from the `choose a database creation method` section. 
 
