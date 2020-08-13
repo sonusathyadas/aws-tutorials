@@ -71,9 +71,29 @@ Blue/Green deployments are simply replicating your current environment (blue), d
     
     ![eb-blue-green-start](images/eb-blue-green-start.png)
 
-3) Once you are sure that everything is fine, you swap the urls of the two environments using AWS Management Console or AWS CLI or EB CLI. Then the traffic will start to flow to your new environment as DNS propogation completes.
+3) Once you are sure that everything is fine, on the environment overview page, choose `Environment actions`, and then choose `Swap environment URLs`.
+4) For `Environment name`, select the current environment. Choose Swap.
+
+    ![aeb-env-swap-urls](images/aeb-env-swap-url.png)
+
+5) After Elastic Beanstalk completes the swap operation, verify that the new environment responds when you try to connect to the old environment URL. However, do not terminate your old environment until the DNS changes are propagated and your old DNS records expire. DNS servers don't necessarily clear old records from their cache based on the time to live (TTL) you set on your DNS records.
 
     ![eb-blue-green-success](images/eb-blue-green-success.png)
+
+
+## Advanced environment customization with configuration files (.ebextensions)
+You can add AWS Elastic Beanstalk configuration files (.ebextensions) to your web application's source code to configure your environment and customize the AWS resources that it contains. Configuration files are YAML- or JSON-formatted documents with a .config file extension that you place in a folder named .ebextensions and deploy in your application source bundle.
+
+**Example**: **.ebextensions/network-load-balancer.config**
+
+This example makes a simple configuration change. It modifies a configuration option to set the type of your environment's load balancer to Network Load Balancer.
+```YAML
+option_settings:
+  aws:elasticbeanstalk:environment:
+    LoadBalancerType: network
+```
+We recommend using YAML for your configuration files, because it's more readable than JSON. YAML supports comments, multi-line commands, several alternatives for using quotes, and more. However, you can make any configuration change in Elastic Beanstalk configuration files identically using either YAML or JSON. The name of the file doesn’t matter as long as the extension is `.config`, but keep in mind that your EB configuration files will be processed in alphabetical order. This is why it is a good idea to use numbers when naming your `.config` files. 
+
 
 ## Deploying application to Elastic Beanstalk
 
