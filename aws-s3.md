@@ -23,7 +23,7 @@ Amazon S3 has a simple web services interface that you can use to store and retr
     * A process deletes an existing object and immediately tries to read it. Until the deletion is fully propagated, Amazon S3 might return the deleted data.
     * A process deletes an existing object and immediately lists keys within its bucket. Until the deletion is fully propagated, Amazon S3 might list the deleted object.
 
-### Storage classes
+## Storage classes
 Amazon S3 offers a range of storage classes designed for different use cases. These include :
 * **S3 Standard**  for general-purpose storage of frequently accessed data
 * **S3 Intelligent-Tiering** for data with unknown or changing access patterns
@@ -103,11 +103,11 @@ Key Features:
 |First byte latency	|milliseconds	|milliseconds	|milliseconds	|milliseconds	|select minutes or hours|select hours|
 |Storage type	    |Object	|Object	|Object	|Object	|Object	|Object|
 |Lifecycle transitions	|Yes	|Yes	|Yes	|Yes	|Yes	|Yes    |
-### Accessing S3 buckets
+## Accessing S3 buckets
 Public access is granted to buckets and objects through access control lists (ACLs), bucket policies, or both. Bucket policies provide centralized access control to buckets and objects based on a variety of conditions, including Amazon S3 operations, requesters, resources, and aspects of the request (for example, IP address). The policies are expressed in the access policy language and enable centralized management of permissions. The permissions attached to a bucket apply to all of the objects in that bucket. To help you manage public access to Amazon S3 resources, Amazon S3 provides block public access settings. Amazon S3 block public access settings can override ACLs and bucket policies so that you can enforce uniform limits on public access to these resources. You can apply block public access settings to individual buckets or to all buckets in your account.
-### Pricing
+## Pricing
 Pricing for Amazon S3 is designed so that you don't have to plan for the storage requirements of your application. Amazon S3 charges you only for what you actually use, with no hidden fees and no overage charges. This gives developers a variable-cost service that can grow with their business while enjoying the cost advantages of the AWS infrastructure.
-### Naming conventions for buckets
+## Naming conventions for buckets
 Rules for bucket naming
 * The following rules apply for naming S3 buckets:
 * Bucket names must be between 3 and 63 characters long.
@@ -117,24 +117,24 @@ Rules for bucket naming
 * Bucket names can't begin with xn-- (for buckets created after February 2020).
 * Bucket names must be unique within a partition. A partition is a grouping of Regions. AWS currently has three partitions: aws (Standard Regions), aws-cn (China Regions), and aws-us-gov (AWS GovCloud [US] Regions)
 * Buckets used with Amazon S3 Transfer Acceleration can't have dots (.) in their names. 
-### Replication
+## Replication
 Replication enables automatic, asynchronous copying of objects across Amazon S3 buckets. Buckets that are configured for object replication can be owned by the same AWS account or by different accounts. You can copy objects between different AWS Regions or within the same Region.
 
 To enable object replication, you add a replication configuration to your source bucket. The minimum configuration must provide the following:
 * The destination bucket where you want Amazon S3 to replicate objects
 * An AWS Identity and Access Management (IAM) role that Amazon S3 can assume to replicate objects on your behalf
-#### Types of object replication
+### Types of object replication
 You can replicate objects between different AWS Regions or within the same AWS Region.
 * **Cross-Region replication (CRR)** is used to copy objects across Amazon S3 buckets in different AWS Regions.
 * **Same-Region replication (SRR)** is used to copy objects across Amazon S3 buckets in the same AWS Region.
-#### Why use replication
+### Why use replication
 Replication can help you do the following:
 * **Replicate objects while retaining metadata**  - You can use replication to make copies of your objects that retain all metadata, such as the original object creation time and version IDs. This capability is important if you need to ensure that your replica is identical to the source object
 * **Replicate objects into different storage classes** — You can use replication to directly put objects into *S3 Glacier*, *S3 Glacier Deep Archive*, or another storage class in the destination bucket. You can also replicate your data to the same storage class and use *lifecycle policies* on the destination bucket to move your objects to a colder storage class as it ages.
 * **Maintain object copies under different ownership** — Regardless of who owns the source object, you can tell Amazon S3 to change replica ownership to the AWS account that owns the destination bucket. This is referred to as the owner override option.
 * **Replicate objects within 15 minutes** — You can use S3 Replication Time Control (S3 RTC) to replicate your data in the same AWS Region or across different Regions in a predictable time frame. S3 RTC replicates 99.99 percent of new objects stored in Amazon S3 within 15 minutes.
 
-### Security
+## Security
 Security is a shared responsibility between AWS and you. Amazon S3 provides a highly durable storage infrastructure designed for mission-critical and primary data storage. Objects are redundantly stored on multiple devices across multiple facilities in an Amazon S3 Region.
 Amazon S3 standard storage offers the following features:
 * Backed with the Amazon S3 Service Level Agreement
@@ -142,17 +142,17 @@ Amazon S3 standard storage offers the following features:
 * Designed to sustain the concurrent loss of data in two facilities
 
 Amazon S3 further protects your data using versioning. You can use versioning to preserve, retrieve, and restore every version of every object that is stored in your Amazon S3 bucket. With versioning, you can easily recover from both unintended user actions and application failures. By default, requests retrieve the most recently written version. You can retrieve older versions of an object by specifying a version of the object in a request.
-#### Encryption
+### Encryption
 Data protection refers to protecting data while in-transit (as it travels to and from Amazon S3) and at rest (while it is stored on disks in Amazon S3 data centers). You can protect data in transit using Secure Socket Layer/Transport Layer Security (SSL/TLS) or client-side encryption. You have the following options for protecting data at rest in Amazon S3:
 * **Server-Side Encryption** – Request Amazon S3 to encrypt your object before saving it on disks in its data centers and then decrypt it when you download the objects.
 * **Client-Side Encryption** – Encrypt data client-side and upload the encrypted data to Amazon S3. In this case, you manage the encryption process, the encryption keys, and related tools.
 
-**Server-side encryption**
+#### Server-side encryption
 You have three mutually exclusive options, depending on how you choose to manage the encryption keys.
 * **Server-Side Encryption with Amazon S3-Managed Keys (SSE-S3)**: When you use Server-Side Encryption with Amazon S3-Managed Keys (SSE-S3), each object is encrypted with a unique key. As an additional safeguard, it encrypts the key itself with a master key that it regularly rotates. Amazon S3 server-side encryption uses one of the strongest block ciphers available, 256-bit Advanced Encryption Standard (AES-256), to encrypt your data.
 * **Server-Side Encryption with Customer Master Keys (CMKs) Stored in AWS Key Management Service (SSE-KMS)**: Server-Side Encryption with Customer Master Keys (CMKs) Stored in AWS Key Management Service (SSE-KMS) is similar to SSE-S3, but with some additional benefits and charges for using this service. There are separate permissions for the use of a CMK that provides added protection against unauthorized access of your objects in Amazon S3. SSE-KMS also provides you with an audit trail that shows when your CMK was used and by whom. Additionally, you can create and manage customer managed CMKs or use AWS managed CMKs that are unique to you, your service, and your Region. 
 * **Server-Side Encryption with Customer-Provided Keys (SSE-C)**:  With Server-Side Encryption with Customer-Provided Keys (SSE-C), you manage the encryption keys and Amazon S3 manages the encryption, as it writes to disks, and decryption, when you access your objects.
-#### Identity and Access Management
+### Identity and Access Management
 By default, all Amazon S3 resources—buckets, objects, and related subresources —are private: only the resource owner, an AWS account that created it, can access the resource. The resource owner can optionally grant access permissions to others by writing an access policy.
 
 Amazon S3 offers access policy options broadly categorized as resource-based policies and user policies. Access policies you attach to your resources (buckets and objects) are referred to as resource-based policies.
@@ -165,8 +165,33 @@ Amazon S3 Transfer Acceleration can speed up content transfers to and from Amazo
 * Transfer Acceleration must be enabled on the bucket. After enabling Transfer Acceleration on a bucket it might take up to 20 minutes before the data transfer speed to the bucket increases.
 * To access the bucket that is enabled for Transfer Acceleration, you must use the endpoint `bucketname.s3-accelerate.amazonaws.com`. or the dual-stack endpoint `bucketname.s3-accelerate.dualstack.amazonaws.com` to connect to the enabled bucket over IPv6.
 * You must be the bucket owner to set the transfer acceleration state. The bucket owner can assign permissions to other users to allow them to set the acceleration state on a bucket. 
+## Versioning
+Versioning is a means of keeping multiple variants of an object in the same bucket. You can use versioning to preserve, retrieve, and restore every version of every object stored in your Amazon S3 bucket. With versioning, you can easily recover from both unintended user actions and application failures. When you enable versioning for a bucket, if Amazon S3 receives multiple write requests for the same object simultaneously, it stores all of the objects.
 
-### Creating and configuring S3 buckets
+If you enable versioning for a bucket, Amazon S3 automatically generates a unique version ID for the object being stored. In one bucket, for example, you can have two objects with the same key, but different version IDs, such as photo.gif (version 111111) and photo.gif (version 121212).
+> [!WARNING]
+> Once you version-enable a bucket, it can never return to an unversioned state. You can, however, suspend versioning on that bucket. 
+
+The versioning state applies to all (never some) of the objects in that bucket. The first time you enable a bucket for versioning, objects in it are thereafter always versioned and given a unique version ID. Objects stored in your bucket before you set the versioning state have a version ID of null. When you enable versioning, existing objects in your bucket do not change. The bucket owner (or any user with appropriate permissions) can suspend versioning to stop accruing object versions. When you suspend versioning, existing objects in your bucket do not change.
+
+## Object lifecycle management
+To manage your objects so that they are stored cost effectively throughout their lifecycle, configure their Amazon S3 Lifecycle. An S3 Lifecycle configuration is a set of rules that define actions that Amazon S3 applies to a group of objects. There are two types of actions:
+
+* **Transition actions** — Define when objects transition to another storage class. For example, you might choose to transition objects to the S3 Standard-IA storage class 30 days after you created them, or archive objects to the S3 Glacier storage class one year after creating them. There are costs associated with the lifecycle transition requests. 
+ * **Expiration actions** — Define when objects expire. Amazon S3 deletes expired objects on your behalf.  The lifecycle expiration costs depend on when you choose to expire objects.
+
+### Use cases
+* If you upload periodic logs to a bucket, your application might need them for a week or a month. After that, you might want to delete them.
+* Some documents are frequently accessed for a limited period of time. After that, they are infrequently accessed. At some point, you might not need real-time access to them, but your organization or regulations might require you to archive them for a specific period. After that, you can delete them.
+* You might upload some types of data to Amazon S3 primarily for archival purposes. For example, you might archive digital media, financial and healthcare records, raw genomics sequence data, long-term database backups, and data that must be retained for regulatory compliance.
+### How to configure a lifecycle?
+1) An S3 Lifecycle configuration (an XML file), consists of a set of rules with predefined actions that you want Amazon S3 to perform on objects during their lifetime.
+2) Amazon S3 provides a set of API operations for managing lifecycle configuration on a bucket. Amazon S3 stores the configuration as a lifecycle subresource that is attached to your bucket. You can make the REST API calls directly to invoke the APIs.
+    * PUT Bucket lifecycle
+    * GET Bucket lifecycle
+    * DELETE Bucket lifecycle
+3) You can also configure the lifecycle by using the Amazon S3 console or programmatically by using the AWS SDK wrapper libraries. 
+## Creating and configuring S3 buckets
 1) Open AWS management console by navigating to [https://console.aws.amazon.com](https://console.aws.amazon.com). Login with your credentials that have privilleges to create and manage S3 service.
 2) Click on the `Search` menu and search for `S3`. Choose S3 from the search result and navigate to the S3 console.    
 3) You will see all the existing buckets in the console. You can create a new bucket by clicking on the `Create bucket` button.
@@ -209,7 +234,7 @@ Amazon S3 Transfer Acceleration can speed up content transfers to and from Amazo
 
     ![S3 upload6](images/s3-upload6.png)
 
-### Read objects from buckets 
+## Read objects from buckets 
 1) Click on the uploaded file. This will show the details of the object in the bucket. You can see the URL for accessing the object in the bottom of the overview page.
 
     ![S3 download1](images/s3-download1.png)
@@ -220,14 +245,14 @@ Amazon S3 Transfer Acceleration can speed up content transfers to and from Amazo
 
 3) After the permissions are set, you can navigate to the object URL and access the files anonymously using the object URL.
 
-### Setting Public access for multiple objects
+## Setting Public access for multiple objects
 1) Open the bucket console and choose all the files you want to set the public access and select `Make public` option from the `Actions` menu.
 
     ![S3 Public access](images/s3-public-access.png)
 
 2) You can now access any objects in the buckets anonymously using the object URL.
 
-### Change Storage class of objects
+## Change Storage class of objects
 1) Open the bucket console and choose all the files you want to change the storage class. Click on the `Actions` button and choose `Change storage class`.
 
     ![S3 storage class](images/s3-storage-class.png)
@@ -236,7 +261,7 @@ Amazon S3 Transfer Acceleration can speed up content transfers to and from Amazo
 
     ![S3 Storage class](images/s3-storage-class2.png)
 
-### Replicate bucket/objects
+## Replicate bucket/objects
 You can replicate your entire bucket or selected objects to another S3 bucket in your current account or a different account. You can replicate in the same region or different region. It is also possible to change the storage class and ownership while replicating the objects.
 1) Open the S3 bucket console and click on the `Management` tab. Select `Replication` option and click on the `Add rule` button to create a new replication rule. 
 
@@ -262,7 +287,7 @@ You can replicate your entire bucket or selected objects to another S3 bucket in
 > [!NOTE]
 > When you enable replication for an existing bucket which has objects in it, it will not replicate those existing objects to the target bucket. Instead only the newly uploaded files will be replicated to the target bucket.
 
-### Replicating existing objects 
+## Replicating existing objects 
 To enable existing object replication for your account, you must contact AWS Support and create a technical support case (service: Amazon S3). This is required to ensure that replication is configured correctly. To prevent your request from being delayed, give your AWS Support case the subject “Replication for Existing Objects” and be sure to include the following information:
 * Source bucket
 * Destination bucket
