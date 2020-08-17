@@ -16,3 +16,4 @@ In this tutorial series I am trying to cover some of the popular AWS services.
 9) [Relational Database services using Amazon RDS](aws-rds.md)
 10) [Decoupling appliations with AWS Simple Queue Service (SQS)](aws-sqs.md)
 11) [Content delivery using AWS CloudFront](aws-cloudfront.md)
+12) [Authenticating apps and services using AWS Cognito](aws-cognito.md)
