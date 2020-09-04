@@ -144,16 +144,21 @@ You can configure your Lambda function to pull in additional code and content in
 
 You can create layers, or use layers published by AWS and other AWS customers. Layers are extracted to the /opt directory in the function execution environment. Each runtime looks for libraries in a different location under /opt, depending on the language.
 
+## Concurrency of AWS Lambda functions
+Concurrency is the number of requests that your function is serving at any given time. When your function is invoked, Lambda allocates an instance of it to process the event. When the function code finishes running, it can handle another request. If the function is invoked again while a request is still being processed, another instance is allocated, which increases the function's concurrency.
 
+Concurrency is subject to a Regional quota that is shared by all functions in a Region. To ensure that a function can always reach a certain level of concurrency, you can configure the function with reserved concurrency. When a function has reserved concurrency, no other function can use that concurrency. Reserved concurrency also limits the maximum concurrency for the function, and applies to the function as a whole, including versions and aliases.
 
+ *Reserved Concurrency* is a single numerical value that may be assigned to a Lambda function's configuration, either through the web console, or via the SDK / CLI. This configuration value has two effects if set:
+* It limits the number of instances of your Lambda function that can be instantiated at any time to the value specified.
+* It makes sure there is always at least enough concurrency capability available in the account to run the number of instances requested.
+If you set the reserved concurrency vale to 20, it means that at most 20 instances of my Lambda will run at any given time.
 
+To enable your function to scale without fluctuations in latency, use `provisioned concurrency`. By allocating provisioned concurrency before an increase in invocations, you can ensure that all requests are served by initialized instances with very low latency. You can configure provisioned concurrency on a version of a function, or on an alias.
 
+When you invoke a Lambda function, the invocation is routed to an execution environment to process the request. When a function has not been used for some time, when you need to process more concurrent invocations, or when you update a function, new execution environments are created. The creation of an execution environment takes care of installing the function code and starting the runtime. Depending on the size of your deployment package, and the initialization time of the runtime and of your code, this can introduce latency for the invocations that are routed to a new execution environment. This latency is usually referred to as a “cold start”. For most applications this additional latency is not a problem. For some applications, however, this latency may not be acceptable. When you enable Provisioned Concurrency for a function, the Lambda service will initialize the requested number of execution environments so they can be ready to respond to invocations.
 
-
-
-
-
-
+![lambda-concurrency-provisioned](images/lambda-concurrency-provisioned.png)
 
 ## Create a Lambda function with the console
 In this demo you create a Lambda function using the AWS Lambda console. Next, you manually invoke the Lambda function using sample event data. AWS Lambda executes the Lambda function and returns results. You then verify execution results, including the logs that your Lambda function created and various CloudWatch metrics. 
